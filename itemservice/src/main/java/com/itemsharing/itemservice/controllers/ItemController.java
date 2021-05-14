@@ -3,7 +3,6 @@ package com.itemsharing.itemservice.controllers;
 import com.itemsharing.itemservice.model.Item;
 import com.itemsharing.itemservice.model.User;
 import com.itemsharing.itemservice.services.ItemService;
-import com.itemsharing.itemservice.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -14,11 +13,9 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
-    private final UserService userService;
 
-    public ItemController(ItemService itemService, UserService userService) {
+    public ItemController(ItemService itemService) {
         this.itemService = itemService;
-        this.userService = userService;
     }
 
     @PostMapping

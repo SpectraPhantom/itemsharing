@@ -6,6 +6,8 @@
     <modules>
         <module>userservice</module>
         <module>itemservice</module>
+        <module>eurekaserver</module>
+        <module>configserver</module>
     </modules>
     <dependencies>
         <dependency>

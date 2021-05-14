@@ -1,5 +1,6 @@
 package com.itemsharing.itemservice.services;
 
+import com.itemsharing.itemservice.clients.UserFeignClient;
 import com.itemsharing.itemservice.model.Item;
 import com.itemsharing.itemservice.model.User;
 import com.itemsharing.itemservice.repositories.ItemRepository;
@@ -15,11 +16,11 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
-    private final UserService userService;
+    private final UserFeignClient userFeignClient;
 
-    public ItemServiceImpl(ItemRepository itemRepository, UserService userService) {
+    public ItemServiceImpl(ItemRepository itemRepository,UserFeignClient userFeignClient) {
         this.itemRepository = itemRepository;
-        this.userService = userService;
+        this.userFeignClient = userFeignClient;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class ItemServiceImpl implements ItemService {
             LocalDate today=LocalDate.now();
             item.setAddDate(today);
 
-            User user=userService.getUserByUsername(username);
+            User user=userFeignClient.getUserByUsername(username);
             item.setUser(user);
 
             Item newItem=itemRepository.save(item);
@@ -48,8 +49,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getItemsByUsername(String username) {
-        User user=userService.getUserByUsername(username);
-        return (List<Item>) itemRepository.findByUser(user);
+        User user=userFeignClient.getUserByUsername(username);
+        return itemRepository.findByUser(user);
     }
 
     @Override
@@ -80,6 +81,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userService.getUserByUsername(username);
+        return userFeignClient.getUserByUsername(username);
     }
 }
