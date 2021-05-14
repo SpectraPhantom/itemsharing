@@ -3,6 +3,8 @@ package com.itemsharing.itemservice.controllers;
 import com.itemsharing.itemservice.model.Item;
 import com.itemsharing.itemservice.model.User;
 import com.itemsharing.itemservice.services.ItemService;
+import com.itemsharing.itemservice.utility.UserContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/item")
+@Slf4j
 public class ItemController {
 
     private final ItemService itemService;
@@ -53,6 +56,7 @@ public class ItemController {
 
     @GetMapping("/user/{username}")
     public User getUserByUsername(@PathVariable String username){
+        log.debug("ItemServiceController CorrelationID: {}", UserContextHolder.getContext().getCorrelationId());
         return itemService.getUserByUsername(username);
     }
 }

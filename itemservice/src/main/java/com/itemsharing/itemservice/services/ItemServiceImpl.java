@@ -4,6 +4,9 @@ import com.itemsharing.itemservice.clients.UserFeignClient;
 import com.itemsharing.itemservice.model.Item;
 import com.itemsharing.itemservice.model.User;
 import com.itemsharing.itemservice.repositories.ItemRepository;
+import com.itemsharing.itemservice.utility.UserContextHolder;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -80,7 +83,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @HystrixCommand(commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "12000")})
     public User getUserByUsername(String username) {
+        log.debug("ItemService.getUserByUsername CorrelationID: {}", UserContextHolder.getContext().getCorrelationId());
         return userFeignClient.getUserByUsername(username);
     }
 }
