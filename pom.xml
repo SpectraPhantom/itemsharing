@@ -8,6 +8,7 @@
         <module>itemservice</module>
         <module>eurekaserver</module>
         <module>configserver</module>
+        <module>zuulserver</module>
     </modules>
     <dependencies>
         <dependency>

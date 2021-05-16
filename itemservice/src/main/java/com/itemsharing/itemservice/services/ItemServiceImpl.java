@@ -83,7 +83,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @HystrixCommand(commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "12000")})
+   // @HystrixCommand(commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "12000")})
     public User getUserByUsername(String username) {
         log.debug("ItemService.getUserByUsername CorrelationID: {}", UserContextHolder.getContext().getCorrelationId());
         return userFeignClient.getUserByUsername(username);
